@@ -8,7 +8,7 @@
 Summary: A network-capable tape backup solution
 Name: amanda
 Version: 2.6.1p2
-Release: 8%{?dist}
+Release: 9%{?dist}
 Source: http://downloads.sourceforge.net/amanda/amanda-%{version}.tar.gz
 #Source: http://www.zmanda.com/downloads/community/community-builds/amanda-%{version}.tar.gz
 Source1: amanda.crontab
@@ -24,6 +24,10 @@ Patch5: amanda-2.6.1p2-pie.patch
 Patch6: amanda-2.6.1p2-ftbfs.patch
 Patch7: amanda-2.6.1p2-optionk.patch
 Patch8: amanda-2.6.1p2-amold.patch
+Patch9: amanda-autogen.patch
+Patch10: amanda-2.6.1p2-listen.patch
+Patch11: amanda-2.6.1p2-glib2.patch
+Patch12: amanda-common-makefile.patch
 License: BSD and LGPLv2 and GPLv3+ and GPLv2
 Group: Applications/System
 URL: http://www.amanda.org
@@ -102,6 +106,10 @@ be used to develop amanda applications.
 %patch6 -p1 -b .ftbfs
 %patch7 -p1 -b .optionk
 %patch8 -p1 -b .amold
+%patch9 -p1 -b .autogen
+%patch10 -p1 -b .listen
+%patch11 -p1 -b .glib2
+%patch12 -p1 -b .common-makefile
 ./autogen
 
 %build
@@ -420,6 +428,10 @@ grep -l -E '^dumpuser[[:blank:]]*"amanda"' /etc/amanda/*/amanda.conf |
 %{_libdir}/libamxfer.so
 
 %changelog
+* Wed Mar 18 2015 Petr Hracek <phracek@redhat.com> - 2.6.1p2-9
+- stream_accept failure when listen returns EADDRINUSE
+- Resolves: #1106389
+
 * Tue Oct 09 2012 Lukáš Nykrýn <lnykryn@redhat.com> - 2.6.1p2-8
 - amanda should require amanda-client (#752096)
 
@@ -682,7 +694,7 @@ grep -l -E '^dumpuser[[:blank:]]*"amanda"' /etc/amanda/*/amanda.conf |
 - New upstream version
 - Turn on --disable-dependency-tracking to work around an automake bug.
 
-* Fri Jun 28 2004 Jay Fenlason <fenlason@redhat.com> 2.4.4p3-1
+* Mon Jun 28 2004 Jay Fenlason <fenlason@redhat.com> 2.4.4p3-1
 - New upstream version
 
 * Tue Jun 15 2004 Elliot Lee <sopwith@redhat.com>
