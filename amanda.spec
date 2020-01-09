@@ -8,7 +8,7 @@
 Summary: A network-capable tape backup solution
 Name: amanda
 Version: 2.6.1p2
-Release: 7%{?dist}
+Release: 8%{?dist}
 Source: http://downloads.sourceforge.net/amanda/amanda-%{version}.tar.gz
 #Source: http://www.zmanda.com/downloads/community/community-builds/amanda-%{version}.tar.gz
 Source1: amanda.crontab
@@ -37,6 +37,7 @@ BuildRequires: glib2-devel openssl-devel swig bison flex
 BuildRequires: libcurl-devel
 Requires(pre): shadow-utils
 Requires(post): grep sed
+Requires: amanda-client = %{version}-%{release}
 Requires: fileutils grep initscripts tar /bin/mail xinetd
 Requires: perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
@@ -419,6 +420,9 @@ grep -l -E '^dumpuser[[:blank:]]*"amanda"' /etc/amanda/*/amanda.conf |
 %{_libdir}/libamxfer.so
 
 %changelog
+* Tue Oct 09 2012 Lukáš Nykrýn <lnykryn@redhat.com> - 2.6.1p2-8
+- amanda should require amanda-client (#752096)
+
 * Wed Jun 23 2010 Jan Görig <jgorig@redhat.com> 2.6.1p2-7
 - added amoldrecover description to amrecover man page
 - Resolves: #593775
