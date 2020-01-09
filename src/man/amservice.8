@@ -1,0 +1,97 @@
+'\" t
+.\"     Title: amservice
+.\"    Author: Jean-Louis Martineau <martineau@zmanda.com>
+.\" Generator: DocBook XSL Stylesheets vsnapshot_8273 <http://docbook.sf.net/>
+.\"      Date: 11/05/2009
+.\"    Manual: System Administration Commands
+.\"    Source: Amanda 2.6.1p2
+.\"  Language: English
+.\"
+.TH "AMSERVICE" "8" "11/05/2009" "Amanda 2\&.6\&.1p2" "System Administration Commands"
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+amservice \- run an amanda service on a client
+.SH "SYNOPSIS"
+.HP \w'\fBamservice\fR\ 'u
+\fBamservice\fR \fIhostname\fR \fIauth\fR \fIservice\fR [\-f\ \fIinput_file\fR] [\-o\ \fIconfigoption\fR]...
+.SH "DESCRIPTION"
+.PP
+\fBAmservice\fR
+execute an
+\fIAmanda\fR
+service on a client\&. It can be used without amanda server configuration (amanda\&.conf and disklist)\&. It can be used to check communication between a server and a client\&. Amservice reads stdin to capture the REQ packet to send to the client\&.
+.PP
+See the
+\fBamanda\fR(8)
+man page for more details about
+\fIAmanda\fR\&.
+.SH "OPTIONS"
+.PP
+\fBhostname\fR
+.RS 4
+The hostname of the client\&.
+.RE
+.PP
+\fBauth\fR
+.RS 4
+The auth to use, one of: bsd, bsdudp, bsdtcp, ssh, rsh or krb5\&. The client must be configured with this auth\&.
+.RE
+.PP
+\fBservice\fR
+.RS 4
+The amanda service to execute on the client\&. One of noop, selfcheck or sendsize\&.
+.RE
+.PP
+\fB\-f input_file\fR
+.RS 4
+Use the file input_file instead of stdin to read the REQ packet from\&.
+.RE
+.PP
+\fB\-o\fR \fIconfigoption\fR
+.RS 4
+See the "\fBCONFIGURATION OVERRIDE\fR" section in
+\fBamanda\fR(8)\&.
+.RE
+.SH "EXAMPLE"
+.PP
+The noop service is easy to execute because it does not require a REQ packet:
+.nf
+amservice hostname bsdtcp noop < /dev/null.fi
+.PP
+The example executes the noop service on the client using bsdtcp auth\&. This is useful for debugging connection problems\&. It print an OPTIONS line upon success\&.
+.PP
+It is more difficult to execute the selfcheck or sendsize service, as these require a valid REQ packet\&. If you have already uccessfully run amanda, you can find valid REQ packets in the amandad\&.*\&.debug files\&.
+.SH "EXIT CODE"
+
+The exit code of \fBamservice\fR is one of:
+.nf
+ 0  = success
+ 1  = error executing amandad on the client\&.
+.fi
+.PP
+As
+\fBamservice\fR
+doesn\'t parse the REP packet, it can only detect failures in executing amandad on the client\&.
+\fBamservice\fR
+can exit with value 0 even if the user is not authorized to execute the service\&. An error message will be printed\&.
+.SH "SEE ALSO"
+.PP
+\fBamanda\fR(8),
+\fBamcheck\fR(8),
+\fBamdump\fR(8),
+\fBamadmin\fR(8)
+.SH "AUTHOR"
+.PP
+\fBJean\-Louis Martineau\fR <\&martineau@zmanda\&.com\&>
+.RS 4
+Zmanda, Inc\&. (http://www\&.zmanda\&.com)
+.RE

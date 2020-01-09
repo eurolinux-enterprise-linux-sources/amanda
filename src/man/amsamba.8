@@ -1,0 +1,81 @@
+'\" t
+.\"     Title: amsamba
+.\"    Author: Jean-Louis Martineau <martineau@zmanda.com>
+.\" Generator: DocBook XSL Stylesheets vsnapshot_8273 <http://docbook.sf.net/>
+.\"      Date: 11/05/2009
+.\"    Manual: System Administration Commands
+.\"    Source: Amanda 2.6.1p2
+.\"  Language: English
+.\"
+.TH "AMSAMBA" "8" "11/05/2009" "Amanda 2\&.6\&.1p2" "System Administration Commands"
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+amsamba \- Amanda Application to interface with smbclient
+.SH "DESCRIPTION"
+.PP
+Amsamba is an
+\fIAmanda\fR
+Application API script\&. It should not be run by users directly\&. It uses smbclient to backup and restore data\&.
+.PP
+The device name in the disklist must have the form \'//HOST/SHARE/SUBDIR\' where HOST is the CIFS host, SHARE is the share to connect and subdir is the subdirectory to backup\&. \'/subdir\' can be ommited, in which case the complete share is archived\&. The host in the disklist should be the name of an intermediate host that has smbclient installed, and is often the Amanda server itself\&.
+.PP
+Include or exclude can be used, but not both\&. The path for \'exclude list\' or \'include list\' must be absolute path on the client\&. The estimate calculates the complete size of the share, without regard for include or exclude directives\&. It will be larger than the actual dump if you use include or exclude\&. Using \'estimate server\' in the dumptype could give better estimate\&.
+.SH "PROPERTIES"
+.PP
+This section lists the properties that control amsamba\'s functionality\&. See
+\fBamanda-applications\fR(7)
+for information on application properties and how they are configured\&.
+.PP
+SMBCLIENT\-PATH
+.RS 4
+
+The path to the smbclient binary\&.  The default is set when \fIAmanda\fR is built\&.
+.RE
+.PP
+GNUTAR\-PATH
+.RS 4
+
+The path to the gnutar binary\&.  The default is set when \fIAmanda\fR is built\&. gnutar
+is use to create the index\&.
+.RE
+.PP
+AMANDAPASS
+.RS 4
+
+Location of the amandapass file, The default is "/etc/amandapass"\&.
+The format of the file is as follow:
+.nf
+  Sharename User%Password Domain
+.fi
+
+Sharename is \'//HOST/SHARE\' without the SUBDIR\&.
+Sharename can be quoted,
+it can be \'*\' to match all share,
+it can be \'//pc\-host/*\' to match all share on pc\-host\&.
+User is the username use to connect to the share\&.
+Password is the password use to connect to the share\&.
+Domain is optional\&. Example:
+.nf
+  //another\-pc/share otheruser%otherpw domain
+.fi
+.RE
+.SH "SEE ALSO"
+.PP
+
+\fBamanda.conf\fR(5),
+\fBamanda-applications\fR(7)
+.SH "AUTHOR"
+.PP
+\fBJean\-Louis Martineau\fR <\&martineau@zmanda\&.com\&>
+.RS 4
+Zmanda, Inc\&. (http://www\&.zmanda\&.com)
+.RE

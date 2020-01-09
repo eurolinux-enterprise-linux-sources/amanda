@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: tapelist
+.\"    Author: James da Silva <jds@amanda.org>
+.\" Generator: DocBook XSL Stylesheets vsnapshot_8273 <http://docbook.sf.net/>
+.\"      Date: 11/05/2009
+.\"    Manual: File formats and conventions
+.\"    Source: Amanda 2.6.1p2
+.\"  Language: English
+.\"
+.TH "TAPELIST" "5" "11/05/2009" "Amanda 2\&.6\&.1p2" "File formats and conventions"
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+tapelist \- The list of \fIAmanda\fR volumes in use
+.SH "DESCRIPTION"
+.PP
+The
+\fItapelist\fR
+file contains the list of tapes in active use\&. This file is not ordinarily ordinarily edited or examined manually\&. Its format may change, or it may be removed altogether, in future versions of
+\fIAmanda\fR\&. It contains lines of the form:
+.PP
+.nf
+YYYYMMDD label flags [#comment]
+.fi
+.PP
+Where
+\fIYYYYMMDD\fR
+is the date the tape was written,
+\fIlabel\fR
+is a label for the tape as written by
+\fBamlabel\fR
+and
+\fIflags\fR
+is one of "reuse" or "no\-reuse" and tells
+\fIAmanda\fR
+whether the tape may be reused\&. A non\-reusable tape will not be overwritten, even if it is older than
+\fBdumpcycle\fR
+dumps\&. See the
+\fBreuse\fR
+options of
+\fBamadmin\fR(8)\&. The optional comment is prefixed with a \'#\' and continues to the end of the line\&. Amanda will maintain this comment until the tape is overwritten\&. Note that comments are not allowed on blank lines\&.
+.PP
+\fBAmdump\fR
+and
+\fBamflush\fR
+will by default refuse to write to an unlabeled tape, or to a labeled tape that is considered active or marked "no\-reuse"\&. There must be more tapes in active rotation (see the
+\fBtapecycle\fR
+option) than there are runs in the backup cycle (see the
+\fBdumpcycle\fR
+option) to prevent overwriting a backup image that would be needed to do a full recovery\&.
+.SH "AUTHORS"
+.PP
+\fBJames da Silva\fR <\&jds@amanda\&.org\&>
+.PP
+\fBStefan G\&. Weichinger\fR <\&sgw@amanda\&.org\&>
+.PP
+\fBDustin J\&. Mitchell\fR <\&dustin@zmanda\&.com\&>
+.RS 4
+Zmanda, Inc\&. (http://www\&.zmanda\&.com)
+.RE

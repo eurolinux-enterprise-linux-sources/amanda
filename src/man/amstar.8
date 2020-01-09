@@ -1,0 +1,78 @@
+'\" t
+.\"     Title: amstar
+.\"    Author: Jean-Louis Martineau <martineau@zmanda.com>
+.\" Generator: DocBook XSL Stylesheets vsnapshot_8273 <http://docbook.sf.net/>
+.\"      Date: 11/05/2009
+.\"    Manual: System Administration Commands
+.\"    Source: Amanda 2.6.1p2
+.\"  Language: English
+.\"
+.TH "AMSTAR" "8" "11/05/2009" "Amanda 2\&.6\&.1p2" "System Administration Commands"
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+amstar \- Amanda Application to interface with star
+.SH "DESCRIPTION"
+.PP
+Amstar is an
+\fIAmanda\fR
+Application API script\&. It should not be run by users directly\&. It uses star to backup and restore data\&.
+.SH "PROPERTIES"
+.PP
+This section lists the properties that control amstar\'s functionality\&. See
+\fBamanda-applications\fR(7)
+for information on application properties and how they are configured\&.
+.PP
+ONE\-FILE\-SYSTEM
+.RS 4
+
+If "YES" (the default), do not allow star to cross filesystem boundaries\&. If "NO", star will cross filesystem boundaries\&.  This corresponds to the \fI\-xdev\fR option of star\&.
+.RE
+.PP
+SPARSE
+.RS 4
+
+If "YES" (the default), star will store sparse files efficiently\&. If "NO", then the \fI\-sparse\fR option is not given to star, and it will not try to detect sparse files\&.
+.RE
+.PP
+STAR\-DLE\-TARDUMP
+.RS 4
+
+If "YES", amstar will use a different tardump file for each DLE\&. The default is "NO"\&.  This property is needed with older versions of star doing many dumps in parallel, because of a race condition in updating the tardump file\&.
+.RE
+.PP
+STAR\-PATH
+.RS 4
+
+The path to the star binary\&.  The default is set when \fIAmanda\fR is built\&.
+.RE
+.PP
+STAR\-TARDUMP
+.RS 4
+
+The directory where star stores the database it uses to generate incremental dumps\&.  The default is set when \fIAmanda\fR is built\&.
+.RE
+.SH "SEE ALSO"
+.PP
+
+\fBamanda.conf\fR(5),
+\fBamanda-applications\fR(7)
+.SH "AUTHORS"
+.PP
+\fBJean\-Louis Martineau\fR <\&martineau@zmanda\&.com\&>
+.RS 4
+Zmanda, Inc\&. (http://www\&.zmanda\&.com)
+.RE
+.PP
+\fBDustin J\&. Mitchell\fR <\&dustin@zmanda\&.com\&>
+.RS 4
+Zmanda, Inc\&. (http://www\&.zmanda\&.com)
+.RE

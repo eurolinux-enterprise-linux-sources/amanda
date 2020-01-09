@@ -1,0 +1,114 @@
+'\" t
+.\"     Title: amdevcheck
+.\"    Author: Ian Turner <ian@zmanda.com>
+.\" Generator: DocBook XSL Stylesheets vsnapshot_8273 <http://docbook.sf.net/>
+.\"      Date: 11/05/2009
+.\"    Manual: System Administration Commands
+.\"    Source: Amanda 2.6.1p2
+.\"  Language: English
+.\"
+.TH "AMDEVCHECK" "8" "11/05/2009" "Amanda 2\&.6\&.1p2" "System Administration Commands"
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+amdevcheck \- Validate an \fIAmanda\fR device and volume\&.
+.SH "SYNOPSIS"
+.HP \w'\fBamdevcheck\fR\ 'u
+\fBamdevcheck\fR \fIconfig\fR [\fIdevice\ name\fR] [\-o\ \fIconfigoption\fR]...
+.SH "DESCRIPTION"
+.PP
+
+\fBAmdevcheck\fR
+provides a way to check that a particular
+\fIAmanda\fR
+device is accessible, whether or not it contains a volume, and whether or not that volume is labeled\&. Some devices can\'t distinguish between all of these cases; a missing volume and an unlabeled volume might generate the same error code, for example\&. In those cases, this tool reports all possible causes of the error\&.
+.PP
+See the
+\fBamanda\fR(8)
+man page for more details about
+\fIAmanda\fR\&. See
+\fBamanda-devices\fR(7)
+for more information on devices\&.
+.SH "OPTIONS"
+.PP
+\fIconfig\fR
+.RS 4
+
+\fIAmanda\fR
+configuration to use\&. Note that
+\fBamdevcheck\fR
+ignores any tape changer configuration\&.
+.RE
+.PP
+\fI device\fR
+.RS 4
+
+\fIAmanda\fR
+device to use\&. This option overrides any tapedev configuration specified in the configuration file\&.
+.RE
+.PP
+\fB\-o\fR \fIclientconfigoption\fR
+.RS 4
+See the "\fBCONFIGURATION OVERRIDE\fR" section in
+\fBamanda\fR(8)\&.
+.RE
+.SH "OUTPUT"
+\fBAmdevcheck\fR returns one or more of the following lines\&. If multiple lines appear, then at least one, but not necessarily all of
+the messages apply\&.  This situation can occur when working with hardware or
+operating systems which cannot distinguish, for example, between a
+malfunctioning drive and a functional but unloaded drive\&.
+.PP
+\fBSUCCESS\fR
+.RS 4
+A tape is ready\&.
+.RE
+.PP
+\fBDEVICE_ERROR\fR
+.RS 4
+A device error has occurred\&.
+.RE
+.PP
+\fBDEVICE_BUSY\fR
+.RS 4
+The device is busy\&.
+.RE
+.PP
+\fBVOLUME_MISSING\fR
+.RS 4
+No tape is loaded in the drive\&.
+.RE
+.PP
+\fBVOLUME_UNLABELED\fR
+.RS 4
+The tape in the drive is unlabeled\&.
+.RE
+.PP
+\fBVOLUME_ERROR\fR
+.RS 4
+A volume error has occurred\&.
+.RE
+.PP
+\fBMESSAGE\fR \fItext\fR
+.RS 4
+Where text provides a human\-readable description of the problem\&.
+.RE
+.SH "SEE ALSO"
+.PP
+
+\fBamanda\fR(8),
+\fBammt\fR(8),
+: http://wiki.zmanda.com
+.SH "AUTHOR"
+.PP
+\fBIan Turner\fR <\&ian@zmanda\&.com\&>
+.RS 4
+Zmanda, Inc\&. (http://www\&.zmanda\&.com)
+.RE

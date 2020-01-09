@@ -1,0 +1,72 @@
+'\" t
+.\"     Title: amvault
+.\"    Author: Dustin J. Mitchell <dustin@zmanda.com>
+.\" Generator: DocBook XSL Stylesheets vsnapshot_8273 <http://docbook.sf.net/>
+.\"      Date: 11/05/2009
+.\"    Manual: System Administration Commands
+.\"    Source: Amanda 2.6.1p2
+.\"  Language: English
+.\"
+.TH "AMVAULT" "8" "11/05/2009" "Amanda 2\&.6\&.1p2" "System Administration Commands"
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+amvault \- Copy \fIAmanda\fR dumps from one volume to another
+.SH "SYNOPSIS"
+.HP \w'\fBamvault\fR\ 'u
+\fBamvault\fR [\-o\ \fIconfigoption\fR]... \fIconfig\fR \fIsrc\-run\-timestamp\fR \fIdst\-changer\fR \fIlabel\-template\fR
+.SH "WARNING"
+.PP
+This application is not yet in its final form, and is subject to major revision in subsequent versions of Amanda\&. Backward compatibility is not guaranteed\&.
+.PP
+The significant limitations of this version of amvault are: tapetypes for secondary and tertiary volumes much match (including length and device_properties); tertiary volumes must be blank (manual erasure is required to re\-use tertiary media; restore/recover operations will request tertiary media by label when dumpfiles are not found on secondary media, but there is no provision to automatically fetch such media from a different changer; and all dumpfiles on a secondary volume are moved to tertiary media \- there is no provision to filter dumps\&.
+.PP
+Feedback on and patches to this application are invited and encouraged!
+.SH "DESCRIPTION"
+.PP
+\fBAmvault\fR
+Copies data from the run with timestamp
+\fIsrc\-run\-timestamp\fR
+onto volumes using the changer
+\fIdst\-changer\fR, labeling new volumes with
+\fIlabel\-template\fR\&. If
+\fIsrc\-run\-timestamp\fR
+is "latest", then the most recent amdump or amflush run will be used\&.
+.PP
+In a vaulting operation, the source media is referred to as "secondary media", while the destination is referred to as "tertiary media"\&.
+.PP
+Each source volume will be copied to a new destination volume; no re\-assembly or splitting will be performed\&. Destination volumes must be at least as large as the source volumes\&.
+.PP
+The changer parameter should specify the name of a changer defined in
+\fBamanda.conf\fR(5)\&. For example:
+.sp
+.nf
+define changer vaulting_tape {
+    tapedev "/dev/rmt/1n"
+    tpchanger "chg\-zd\-mtx"
+    changerdev "/dev/sg0"
+    changerfile "vaulting\-changer\&.conf"
+}
+.fi
+.PP
+The label template functions identically to the
+\fIlabel\-new\-tapes\fR
+parameter in
+\fBamanda.conf\fR(5)\&.
+.SH "SEE ALSO"
+.PP
+\fBamanda\fR(8)
+.SH "AUTHOR"
+.PP
+\fBDustin J\&. Mitchell\fR <\&dustin@zmanda\&.com\&>
+.RS 4
+Zmanda, Inc\&. (http://www\&.zmanda\&.com)
+.RE
